@@ -40,6 +40,9 @@ def get_url(search_term):
 
 def extract_record(item):
     '''extract and return data from a single record'''
+    asin = item.get('data-asin')
+    print("asin: ", asin)
+
     atag = item.h2.a
 
     #description
@@ -52,14 +55,24 @@ def extract_record(item):
         #price
         price_parent = item.find('span', 'a-price')
         price = price_parent.find('span', 'a-offscreen').text
+        price = price.strip("$")
+        price = float(price)
     except AttributeError:
         return
 
-    result = (description, price, url)
+    result = (asin, description, price, url)
 
     return result
 
-def search(search_term):
+@app.route('/add_item')
+def add_item():
+    return render_template('add_item.html')
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+
+    search_term = request.form['search_term']
+
     '''run main program routine'''
     chrome_options = Options()
     chrome_options.add_argument('--headless')
@@ -82,7 +95,11 @@ def search(search_term):
 
     for record in records:
         print(record)
+    
+    final_records = records[:5]
+
     #then send data
+    return render_template('add_item.html', records=final_records)
 
 def connect_db():
     return sqlite3.connect(app.database)

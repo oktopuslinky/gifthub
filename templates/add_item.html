@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action='/search' method='POST'>
+        
+        <label for='search_term'>Search on Amazon:</label>
+        <input type='text' name='search_term'>
+
+        <label for='submit'>Search</label>
+        <input type='button' name='submit'>
+    </form>
+
+    <table>
+        <tr>
+            <th>Item name</th>
+            <th>Price</th>
+        </tr>
+        
+        {% for record in records %}
+        
+        <tr>
+            <td><a href='{{ record[3] }}'>{{ record[1] }}</a></td>
+            <td>{{ record[2] }}</td>
+        </tr>
+
+        {% endfor %}
+    
+    </table>
+
+    
+
+{% endblock %}
