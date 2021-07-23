@@ -17,11 +17,14 @@
             <th>Price</th>
         </tr>
         
+        <!-- do for range loop to get record number, then transmit data to app.py -->
+
         {% for record in records %}
         
         <tr>
             <td><a href='{{ record[3] }}'>{{ record[1] }}</a></td>
             <td>{{ record[2] }}</td>
+            <td><button>Add Item</button></td>
         </tr>
 
         {% endfor %}
