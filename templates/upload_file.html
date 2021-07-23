@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!--INSERT PAGE CONTENT HERE-->
+    <form action='/upload_file' method='POST' enctype = "multipart/form-data">
+        <input
+            type='file'
+            id='file'
+            name='file'
+            accept="image/png, image/jpeg"
+        >
+        <input type='submit' value='Submit'>
+    </form>
+{% endblock %}

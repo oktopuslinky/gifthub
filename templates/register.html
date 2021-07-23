@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!--INSERT PAGE CONTENT HERE-->
+    <h1>Register for an Account</h1>
+        <form action='/register' method='POST'>
+
+            <label for="email">Email</label>
+            <input type="email" name="email">
+
+            <label for="password">Create Password</label>
+            <input type="password" name="password">
+
+            <label for="name">What is your name?</label>
+            <input type="text" id="name" name="name">
+            
+            <label for="balance">Up to how much money are you willing to spend?</label>
+            <input type="text" id="balance" name="balance">
+
+            <input type="submit" value="next">
+        </form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+        <h1>Login</h1>
+        <form action='/login' method='POST'>
+            <div class="textbox">
+                <i class="fas fa-user"></i>
+                <input type="text" name="email" id="email" placeholder="Email">
+            </div>
+    
+            <div class="textbox">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="password" placeholder="Password">
+            </div>
+    
+            <input type="submit" class="btn" value="Sign in">
+        </form>
+
+        <input type="button" class="btn" value="Register" onclick='location.href="/register"'>
+    </div>
+    {% endblock %}
