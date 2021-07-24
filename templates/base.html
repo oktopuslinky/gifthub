@@ -3,51 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static',filename='base.css') }}">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 
 <body>
-    <div class="sidebar">
-        <div class="logo-details">
-            <div class="logo_name">GiftHub</div>
-            <i class='bx bx-menu' id="btn"></i>
-        </div>
-        <ul class="nav-list">
-            <li>
-                <a href="#">
-                    <i class='bx bx-grid-alt'></i>
-                    <span class="links_name">Dashboard</span>
-                </a>
-                <span class="tooltip">Dashboard</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cart-alt'></i>
-                    <span class="links_name">Order</span>
-                </a>
-                <span class="tooltip">Order</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-heart'></i>
-                    <span class="links_name">Saved</span>
-                </a>
-                <span class="tooltip">Saved</span>
-            </li>
-            <li class="profile">
-                <div class="profile-details">
-                    <div class="name_balance">
-                        <div class="name">USER-NAME</div>
-                        <div class="balance">$500</div>
-                    </div>
-                </div>
-
-                <i class='bx bx-log-out' id="log_out" href="#"></i>
-            </li>
+    <input type="checkbox" id="check">
+    <label for="check">
+        <i class="fas fa-bars" id="btn"></i>
+        <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar" style="font-family: Roboto;">
+        <header>Gifthub</header>
+        <ul>
+            <li><a href="#"><i class="fas fa-qrcode"></i>Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-cart-plus"></i>Add Item</a></li>
+            <li><a href="#"><i class="far fa-heart"></i>Wishlist</a></li>
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i>Sign out!</a></li>
         </ul>
     </div>
-    <script src="{{ url_for('static',filename='base.js') }}"></script>
+    <section></section>
 </body>
 
 {% endblock %}
