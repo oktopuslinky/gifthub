@@ -20,6 +20,14 @@ app.database='gifts.db'
 
 app.secret_key = "fopwiquaencsx325"
 
+@app.context_processor
+def inject_data():
+    g.db = connect_db()
+    cur = g.db.execute("SELECT balance FROM gift_list WHERE planner_id=?", [session['id']])
+    data = cur.fetchall()
+    print(data)
+    return dict(balance=data[0][0])
+
 def login_required(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -99,6 +107,11 @@ def get_user_data():
 
     return planner_id, name, gift_ids, balance, picture
 
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('dashboard'))
+
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     if request.method == 'POST':
@@ -141,6 +154,9 @@ def add_item():
         balance = data[0][3]
         planner_id = data[0][0]
         planner_id, name, gift_ids, balance, picture = get_user_data()
+
+        if not gift_ids:
+            gift_ids = ""
 
         new_gift_ids = gift_ids + "," + asin
         new_balance = float(balance)-float(price)
@@ -214,18 +230,24 @@ def home():
 @login_required
 def wishlist():
     planner_id, name, gift_ids, balance, picture = get_user_data()
+    
+    if gift_ids == "":
+        flash('You have no items in your wishlist.')
+        return render_template('wishlist.html')
+    
     gift_list = gift_ids.split(',')
     gift_list.pop(0)
     print(gift_list)
     
-    for gift in gift_list:
+    wishlist = list()
+    for gift_asin in gift_list:
+        print('gift_asin: ', gift_asin)
         g.db = connect_db()
-        cur = g.db.execute('SELECT * FROM gifts')
-        data = cur.fetchall()
-
-        print(data)
+        cur = g.db.execute('SELECT * FROM gifts WHERE asin=?', [str(gift_asin)])
+        gift_data = cur.fetchall()
+        wishlist.append(gift_data[0])
     
-    return render_template('wishlist.html')
+    return render_template('wishlist.html', wishlist=wishlist)
 
 @app.route('/dashboard')
 @login_required
