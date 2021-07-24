@@ -2,6 +2,9 @@
 
 {% block content %}
 
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
     <form action='/search' method='POST'>
         
         <label for='search_term'>Search on Amazon:</label>
@@ -18,39 +21,32 @@
         </tr>
         
         <!-- do for range loop to get record number, then transmit data to app.py -->
-
         {% for record in records %}
         
-        <tr>
-            <td><a href='{{ record[3] }}'>{{ record[1] }}</a></td>
-            <td>{{ record[2] }}</td>
-            <td><button>Add Item</button></td>
-        </tr>
+            <tr>
+                <td><a href='{{ record[3] }}'>{{ record[1] }}</a></td>
+                <td>{{ record[2] }}</td>
+                <td><button id='{{ record[0] }}' onclick="sendItem('{{ record[0] }}', '{{ record[1] }}', '{{ record[2] }}', '{{ record[3] }}')">Add Item</button></td>
+            </tr>
 
         {% endfor %}
-    
     </table>
 
     <script>
-        function sendItem(asin){
-            console.log(asin)
-            /*
+        function sendItem(asin, description, price, url){
+            $('#'+asin).text('Item added');
+
             data = {
                 'asin': asin,
                 'description': description,
                 'price': price,
                 'url': url
             }
-
-            console.log(data);
-
             $.ajax({
                 type: "POST",
                 url: "{{ url_for('add_item') }}",
-                contentType: 'application/json;charset=UTF-8',
                 data: data
             });
-            */
         }
     </script>
 

@@ -57,6 +57,7 @@ def extract_record(item):
         price_parent = item.find('span', 'a-price')
         price = price_parent.find('span', 'a-offscreen').text
         price = price.strip("$")
+        price = price.replace(',', "")
         price = float(price)
     except AttributeError:
         return
@@ -65,11 +66,56 @@ def extract_record(item):
 
     return result
 
+def search_gift(asin):
+    '''searches if gift already exists in db'''
+    print('searching')
+    g.db = connect_db()
+    cur = g.db.execute("SELECT * FROM gifts WHERE asin=?", [asin])
+    data = cur.fetchall()
+    if data:
+        print('there is data')
+        return True
+    else:
+        print('no data')
+        return False
+    
 
-@app.route('/add_item')
+@app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     if request.method == 'POST':
-        print(request.json['asin'])
+        asin = request.form['asin']
+        description = request.form['description']
+        price = request.form['price']
+        url = request.form['url']
+
+        
+        g.db = connect_db()
+        gift_exists = search_gift(asin)
+        print("gift exists: ", gift_exists)
+
+        
+        g.db.execute(
+            '''
+            INSERT INTO gifts(asin, description, price, url)
+            VALUES(?, ?, ?, ?)
+            ''', [asin, description, price, url]
+        )
+        
+        cur = g.db.execute('SELECT * FROM gift_list where planner_id=?', [session['id']])
+        data = cur.fetchall()
+        print(data)
+
+        """
+        g.db.execute(
+            '''
+            INSERT INTO gift_list(planner_id, gift_ids, balance)
+            VALUES(?, ?, ?)
+            ''', []
+        )
+        """
+
+        g.db.commit()
+
     return render_template('add_item.html')
 
 
@@ -85,18 +131,6 @@ def search():
         
         records = []
         url = get_url(search_term)
-
-        '''
-        for page in range(1, 6):
-            driver.get(url.format(page))
-            soup = BeautifulSoup(driver.page_source, 'html.parser')
-            results = soup.find_all('div', {'class': 's-result-item s-asin sg-col-0-of-12 sg-col-16-of-20 sg-col sg-col-12-of-16'})
-            
-            for item in results:
-                record = extract_record(item)
-                if record:
-                    records.append(record)
-        '''
 
         driver.get(url.format(1))
         soup = BeautifulSoup(driver.page_source, 'html.parser')
