@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Wishlist{% endblock %}
+
+{% block head %}
+    <!--insert head data-->
+{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Item name</th>
+            <th>Price</th>
+        </tr>
+
+        {% for item in wishlist %}
+        <tr>
+            <td><a href='{{ item[3] }}'>{{ item[1] }}</a></td>
+            <td>{{ item[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

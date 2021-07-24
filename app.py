@@ -1,4 +1,5 @@
 import csv, sqlite3, os
+from sqlite3.dbapi2 import connect
 from flask import Flask, render_template, redirect, url_for, request, session, flash, g
 from functools import wraps
 from werkzeug.utils import secure_filename
@@ -81,7 +82,7 @@ def search_gift(asin):
     
 def get_user_data():
     g.db = connect_db()
-    cur = g.db.execute('SELECT * FROM gift_list where planner_id=?', [session['id']])
+    cur = g.db.execute('SELECT * FROM gift_list WHERE planner_id=?', [session['id']])
     data = cur.fetchall()
     
     if not data:
@@ -199,6 +200,23 @@ def home():
         return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('login'))
+
+@app.route('/wishlist')
+@login_required
+def wishlist():
+    planner_id, name, gift_ids, balance, picture = get_user_data()
+    gift_list = gift_ids.split(',')
+    gift_list.pop(0)
+    print(gift_list)
+    
+    for gift in gift_list:
+        g.db = connect_db()
+        cur = g.db.execute('SELECT * FROM gifts')
+        data = cur.fetchall()
+
+        print(data)
+    
+    return render_template('wishlist.html')
 
 @app.route('/dashboard')
 @login_required
