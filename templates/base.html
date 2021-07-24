@@ -3,9 +3,37 @@
 {% endblock %}
 
 {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    {% endif %}
+{% if messages %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
+{% endif %}
 {% endwith %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div class="nav" id="navbar">
+        <nav class="nav__container">
+            <div class="nav__list">
+                <div class="nav__items">
+                    <a href="#" class="nav__link active" style="padding-top: 50px;">
+                        <i class='bx bx-home nav__icon'></i>
+                        <span class="nav__name">Home</span>
+                    </a>
+
+                    <a href="#" class="nav__link">
+                        <i class='bx bx-message-rounded nav__icon'></i>
+                        <span class="nav__name">Messages</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</body>

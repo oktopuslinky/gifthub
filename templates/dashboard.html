@@ -2,9 +2,10 @@
 
 {% block content %}
 
-    <!--INSERT PAGE CONTENT HERE-->
-    {% for user in data %}
-        <h1 style = "font-size: 3em; margin: 50px;padding: 0;text-align: center;font-family: Arial, Helvetica, sans-serif;">Welcome, {{ user[1] }}!</h1>
-    {% endfor %}
+<!--INSERT PAGE CONTENT HERE-->
+{% for user in data %}
+<h1 style="font-size: 3em; margin: 50px;padding: 0;text-align: center;font-family: Arial, Helvetica, sans-serif;">
+    Welcome, {{ user[1] }}!</h1>
+{% endfor %}
 
 {% endblock %}
