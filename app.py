@@ -73,12 +73,15 @@ def search_gift(asin):
     g.db = connect_db()
     cur = g.db.execute("SELECT * FROM gifts WHERE asin=?", [asin])
     data = cur.fetchall()
-    if data:
+
+    print('gifts data: ', data)
+
+    if len(data) > 1:
         print('there is data')
-        return True
+        return 'yes'
     else:
         print('no data')
-        return False
+        return 'no'
     
 def get_user_data():
     g.db = connect_db()
@@ -105,18 +108,24 @@ def add_item():
         url = request.form['url']
 
         
-        g.db = connect_db()
+        
         gift_exists = search_gift(asin)
         print("gift exists: ", gift_exists)
 
-        if not gift_exists:
+        if gift_exists == 'yes':
+            print('gift exists true !!!!')
+        if gift_exists == 'no':
             #add gift to db if it doesn't exist already
+            print('GIFT NOT EXISTS !!!')
+            g.db = connect_db()
             g.db.execute(
                 '''
                 INSERT INTO gifts(asin, description, price, url)
                 VALUES(?, ?, ?, ?)
                 ''', [asin, description, price, url]
             )
+
+            g.db.commit()
         
 
         #TODO: add to gift_list
