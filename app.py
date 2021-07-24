@@ -65,11 +65,13 @@ def extract_record(item):
 
     return result
 
-'''
+
 @app.route('/add_item')
 def add_item():
+    if request.method == 'POST':
+        print(request.json['asin'])
     return render_template('add_item.html')
-'''
+
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -99,12 +101,15 @@ def search():
         driver.get(url.format(1))
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         results = soup.find_all('div', {'class': 's-result-item s-asin sg-col-0-of-12 sg-col-16-of-20 sg-col sg-col-12-of-16'})
+        print("results: ", results)
         if not results:
-            results = soup.find_all('div', {'class': 'sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'})
-        else:
-            flash('This item does not exist')
-            return render_template(url_for('add_item'))
-
+            #second item type case
+            results_2 = soup.find_all('div', {'class': 'sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'})
+            results = results_2
+            if not results_2:
+                flash('This item does not exist')
+                return redirect(url_for('add_item'))
+            
         for item in results:
             record = extract_record(item)
             if record:

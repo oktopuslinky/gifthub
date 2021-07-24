@@ -8,7 +8,7 @@
         <input type='text' name='search_term'>
 
         <label for='submit'>Search</label>
-        <input type='button' name='submit'>
+        <input type='submit' name='submit'>
     </form>
 
     <table>
@@ -30,6 +30,29 @@
         {% endfor %}
     
     </table>
+
+    <script>
+        function sendItem(asin){
+            console.log(asin)
+            /*
+            data = {
+                'asin': asin,
+                'description': description,
+                'price': price,
+                'url': url
+            }
+
+            console.log(data);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ url_for('add_item') }}",
+                contentType: 'application/json;charset=UTF-8',
+                data: data
+            });
+            */
+        }
+    </script>
 
     
 
