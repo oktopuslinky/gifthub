@@ -64,26 +64,39 @@ def extract_record(item):
 
     return result
 
+'''
 @app.route('/add_item')
 def add_item():
     return render_template('add_item.html')
+'''
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+    if request.method == 'POST':
+        search_term = request.form['search_term']
 
-    search_term = request.form['search_term']
+        '''run main program routine'''
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
 
-    '''run main program routine'''
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
+        driver = webdriver.Chrome(options=chrome_options)
+        
+        records = []
+        url = get_url(search_term)
 
-    driver = webdriver.Chrome(options=chrome_options)
-    
-    records = []
-    url = get_url(search_term)
+        '''
+        for page in range(1, 6):
+            driver.get(url.format(page))
+            soup = BeautifulSoup(driver.page_source, 'html.parser')
+            results = soup.find_all('div', {'class': 's-result-item s-asin sg-col-0-of-12 sg-col-16-of-20 sg-col sg-col-12-of-16'})
+            
+            for item in results:
+                record = extract_record(item)
+                if record:
+                    records.append(record)
+        '''
 
-    for page in range(1, 6):
-        driver.get(url.format(page))
+        driver.get(url.format(1))
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         results = soup.find_all('div', {'class': 's-result-item s-asin sg-col-0-of-12 sg-col-16-of-20 sg-col sg-col-12-of-16'})
         
@@ -91,16 +104,17 @@ def search():
             record = extract_record(item)
             if record:
                 records.append(record)
-    driver.close()
+        driver.close()
 
-    for record in records:
-        print(record)
+        for record in records:
+            print(record)
+        
+        final_records = records[:5]
+
+        #then send data
+        return render_template('add_item.html', records=final_records)
+    return render_template('add_item.html')
     
-    final_records = records[:5]
-
-    #then send data
-    return render_template('add_item.html', records=final_records)
-
 def connect_db():
     return sqlite3.connect(app.database)
 
