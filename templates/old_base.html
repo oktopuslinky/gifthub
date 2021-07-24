@@ -1,0 +1,35 @@
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+    <input type="checkbox" id="check">
+    <label for="check">
+        <i class="fas fa-bars" id="btn"></i>
+        <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar" style="font-family: Roboto;">
+        <header>Gifthub</header>
+        <ul>
+            <li><a href="#"><i class="fas fa-qrcode"></i>Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-cart-plus"></i>Add Item</a></li>
+            <li><a href="#"><i class="far fa-heart"></i>Wishlist</a></li>
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i>Sign out!</a></li>
+        </ul>
+    </div>
+    <section></section>
+</body>
+
+{% endblock %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
+{% endif %}
+{% endwith %}
