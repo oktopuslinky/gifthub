@@ -84,6 +84,9 @@ def get_user_data():
     cur = g.db.execute('SELECT * FROM gift_list where planner_id=?', [session['id']])
     data = cur.fetchall()
     
+    if not data:
+        return redirect(url_for('register'))
+
     planner_id = data[0][0]
     name = data[0][1]
     gift_ids = data[0][2]
@@ -116,11 +119,21 @@ def add_item():
         
 
         #TODO: add to gift_list
+        g.db = connect_db()
+
+        print(session['id'])
+
+        cur = g.db.execute('SELECT * FROM gift_list where planner_id=?', [session['id']])
+        data = cur.fetchall()
+
+        print(data)
         
+        balance = data[0][3]
+        planner_id = data[0][0]
         planner_id, name, gift_ids, balance, picture = get_user_data()
 
-        new_gift_ids = ""
-        new_balance = balance-price
+        new_gift_ids = gift_ids + "," + asin
+        new_balance = float(balance)-float(price)
         
 
         
@@ -134,7 +147,7 @@ def add_item():
         
 
         g.db.commit()
-
+        return render_template('add_item.html')
     return render_template('add_item.html')
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -174,7 +187,7 @@ def search():
         final_records = records[:5]
 
         #then send data
-        return render_template('add_item.html', records=final_records, balance=balance)
+        return render_template('add_item.html', records=final_records)
     return render_template('add_item.html')
     
 def connect_db():

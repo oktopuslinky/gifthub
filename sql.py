@@ -9,7 +9,7 @@ with sqlite3.connect("gifts.db") as connection:
             planner_id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             gift_ids INTEGER,
-            balance INTEGER,
+            balance DECIMAL,
             picture TEXT
         )
         '''
