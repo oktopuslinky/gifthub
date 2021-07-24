@@ -76,7 +76,6 @@ def search():
     if request.method == 'POST':
         search_term = request.form['search_term']
 
-        '''run main program routine'''
         chrome_options = Options()
         chrome_options.add_argument('--headless')
 
@@ -100,7 +99,12 @@ def search():
         driver.get(url.format(1))
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         results = soup.find_all('div', {'class': 's-result-item s-asin sg-col-0-of-12 sg-col-16-of-20 sg-col sg-col-12-of-16'})
-        
+        if not results:
+            results = soup.find_all('div', {'class': 'sg-col-4-of-12 s-result-item s-asin sg-col-4-of-16 sg-col sg-col-4-of-20'})
+        else:
+            flash('This item does not exist')
+            return render_template(url_for('add_item'))
+
         for item in results:
             record = extract_record(item)
             if record:
