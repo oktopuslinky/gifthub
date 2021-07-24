@@ -1,7 +1,55 @@
 {% block content %}
+
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='base.css') }}">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <div class="logo_name">GiftHub</div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="#">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cart-alt'></i>
+                    <span class="links_name">Order</span>
+                </a>
+                <span class="tooltip">Order</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-heart'></i>
+                    <span class="links_name">Saved</span>
+                </a>
+                <span class="tooltip">Saved</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <div class="name_balance">
+                        <div class="name">USER-NAME</div>
+                        <div class="balance">$500</div>
+                    </div>
+                </div>
+
+                <i class='bx bx-log-out' id="log_out" href="#"></i>
+            </li>
+        </ul>
+    </div>
+    <script src="{{ url_for('static',filename='base.js') }}"></script>
+</body>
+
 {% endblock %}
 
 {% with messages = get_flashed_messages() %}
@@ -11,31 +59,3 @@
 {% endfor %}
 {% endif %}
 {% endwith %}
-
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
-
-<body>
-    <div class="nav" id="navbar">
-        <nav class="nav__container">
-            <div class="nav__list">
-                <div class="nav__items">
-                    <a href="#" class="nav__link active" style="padding-top: 50px;">
-                        <i class='bx bx-home nav__icon'></i>
-                        <span class="nav__name">Home</span>
-                    </a>
-
-                    <a href="#" class="nav__link">
-                        <i class='bx bx-message-rounded nav__icon'></i>
-                        <span class="nav__name">Messages</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </div>
-</body>
