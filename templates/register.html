@@ -1,9 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='register.css') }}">
+    <title>Login</title>
+</head>
+<div class="register-box" style='background-color: black; opacity: 0.7; padding: 50px; border-radius:10px;'>
+    <h1>Glad to have you!</h1>
+    <form action='/register' method='POST'>
+        <div class="textbox">
+            <input type="text" name="email" id="email" placeholder="Email" required>
+        </div>
+
+        <div class="textbox">
+            <input type="password" name="password" id="password" placeholder="Password" required>
+        </div>
+
+        <div class="textbox">
+            <input type="text" name="name" id="name" placeholder="Full Name" required>
+        </div>
+
+        <input type="submit" class="btn" value="Sign in" onclick='location.href="/login"'>
+    </form>
+    <!-- <script>
+        function validate() {
+            if (document.getElementById('email').value == '' || document.getElementById('name').value == '' || document.getElementById('password').value == '') {
+                console.alert("All fields are necessary")
+            }
+            else{
+                return ('location.href = "/login"')
+            }
+        }
+    </script> -->
+</div>
+{% endblock %}
     <!--INSERT PAGE CONTENT HERE-->
-    <h1>Register for an Account</h1>
+    <!-- <h1>Register for an Account</h1>
         <form action='/register' method='POST'>
+
+            <label for="name">What is your name?</label>
+            <input type="text" id="name" name="name">
 
             <label for="email">Email</label>
             <input type="email" name="email">
@@ -11,12 +50,5 @@
             <label for="password">Create Password</label>
             <input type="password" name="password">
 
-            <label for="name">What is your name?</label>
-            <input type="text" id="name" name="name">
-            
-            <label for="balance">Up to how much money are you willing to spend?</label>
-            <input type="text" id="balance" name="balance">
-
-            <input type="submit" value="next">
-        </form>
-{% endblock %}
+            <input type="submit" value="register">
+        </form> -->
