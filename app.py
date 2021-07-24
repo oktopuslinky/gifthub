@@ -93,14 +93,17 @@ def add_item():
         gift_exists = search_gift(asin)
         print("gift exists: ", gift_exists)
 
+        if not gift_exists:
+            #add gift to db if it doesn't exist already
+            g.db.execute(
+                '''
+                INSERT INTO gifts(asin, description, price, url)
+                VALUES(?, ?, ?, ?)
+                ''', [asin, description, price, url]
+            )
         
-        g.db.execute(
-            '''
-            INSERT INTO gifts(asin, description, price, url)
-            VALUES(?, ?, ?, ?)
-            ''', [asin, description, price, url]
-        )
-        
+
+        #TODO: add to gift_list
         cur = g.db.execute('SELECT * FROM gift_list where planner_id=?', [session['id']])
         data = cur.fetchall()
         print(data)
