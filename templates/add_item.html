@@ -28,7 +28,7 @@
         
             <tr>
                 <td><a href='{{ record[3] }}'>{{ record[1] }}</a></td>
-                <td>{{ record[2] }}</td>
+                <td id='price{{ record[0] }}'>{{ record[2] }}</td>
                 <td><button id='{{ record[0] }}' onclick="sendItem('{{ record[0] }}', '{{ record[1] }}', '{{ record[2] }}', '{{ record[3] }}')">Add Item</button></td>
             </tr>
 
@@ -37,6 +37,15 @@
 
     <script>
         function sendItem(asin, description, price, url){
+            the_balance = parsefloat('{{ balance }}')
+            the_price = parseFloat($('#price'+asin).text())
+            if (the_balance > the_price){
+                console.log("not work")
+            }
+            else{
+                console.log("all good")
+            }
+
             $('#'+asin).text('Item added');
 
             data = {

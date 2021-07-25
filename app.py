@@ -23,10 +23,11 @@ app.secret_key = "fopwiquaencsx325"
 @app.context_processor
 def inject_data():
     g.db = connect_db()
-    cur = g.db.execute("SELECT balance FROM gift_list WHERE planner_id=?", [session['id']])
-    data = cur.fetchall()
-    print(data)
-    return dict(balance=data[0][0])
+    if session['id']:
+        cur = g.db.execute("SELECT balance FROM gift_list WHERE planner_id=?", [session['id']])
+        data = cur.fetchall()
+        print(data)
+        return dict(balance=data[0][0])
 
 def login_required(f):
     @wraps(f)
@@ -144,7 +145,7 @@ def add_item():
         #TODO: add to gift_list
         g.db = connect_db()
 
-        print(session['id'])
+        print("session id:", session['id'])
 
         cur = g.db.execute('SELECT * FROM gift_list where planner_id=?', [session['id']])
         data = cur.fetchall()
@@ -154,6 +155,11 @@ def add_item():
         balance = data[0][3]
         planner_id = data[0][0]
         planner_id, name, gift_ids, balance, picture = get_user_data()
+        
+        if float(price) > float(balance):
+            print('item not affordable!!!')
+            flash('You cannot afford this item.')
+            return render_template('add_item.html')
 
         if not gift_ids:
             gift_ids = ""
@@ -301,7 +307,7 @@ def upload_file():
         cur = g.db.execute('SELECT * FROM logins')
         data = cur.fetchall()
 
-        reg_farmer_id=data[-1][0]
+        reg_planner_id=data[-1][0]
 
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -318,7 +324,7 @@ def upload_file():
             flash('No selected file')
             return render_template('upload_file.html')
         if file and allowed_file(file.filename):
-            filename = secure_filename(str(reg_farmer_id)+'.'+str(mimetype))
+            filename = secure_filename(str(reg_planner_id)+'.'+str(mimetype))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             
             g.db.execute(
@@ -326,7 +332,7 @@ def upload_file():
                 UPDATE gift_list
                 SET picture = ?
                 WHERE planner_id = ?;
-                ''', [filename, reg_farmer_id]
+                ''', [filename, reg_planner_id]
             )
             g.db.commit()
 
