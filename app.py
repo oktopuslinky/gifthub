@@ -23,7 +23,7 @@ app.secret_key = "fopwiquaencsx325"
 @app.context_processor
 def inject_data():
     g.db = connect_db()
-    if session['id']:
+    if session['id'] is not None and session['id'] != "":
         cur = g.db.execute("SELECT balance FROM gift_list WHERE planner_id=?", [session['id']])
         data = cur.fetchall()
         print(data)
