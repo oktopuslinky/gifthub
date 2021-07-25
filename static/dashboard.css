@@ -1,5 +1,5 @@
 body{
-    background: #FFF;
+    background-image: url("/static/dashboard.jpg");
 }
 .dashboard h1{
     font-size: 1.8em;
@@ -20,7 +20,7 @@ body{
 }
 .carousel .carousel-text h1 {
     text-align: center;
-    color: #ffffff;
+    color: #000000;
     font-size: 60px;
     font-weight: 700;
     margin-bottom: 30px;
