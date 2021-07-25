@@ -296,13 +296,15 @@ def login():
 def inject_data():
     g.db = connect_db()
     if 'id' in session and session['id']:
-        cur = g.db.execute("SELECT name, balance FROM gift_list WHERE planner_id=?", [session['id']])
+        cur = g.db.execute("SELECT name, balance, picture FROM gift_list WHERE planner_id=?", [session['id']])
         data = cur.fetchall()
         the_data = str(data[0][1]).replace(",", "")
 
         the_name = str(data[0][0])
 
-        return dict(balance=the_data, name=the_name)
+        the_pic = str(data[0][2])
+
+        return dict(balance=the_data, name=the_name, the_pic=the_pic)
     else:
         return dict(balance='500', name='user')
 
