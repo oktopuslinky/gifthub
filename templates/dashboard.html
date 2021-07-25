@@ -1,10 +1,71 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <!--insert content-->
 
+<head>
+    <!--ADD CSS FILE LINK-->
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="dashboard"></div>
     {% for user in data %}
-        <h1 style="font-size: 3em; margin: 50px;padding: 0;text-align: center;font-family: Arial, Helvetica, sans-serif;">Welcome, {{ user[1] }}!</h1>
-    {% endfor %}
+    <h1>Welcome, {{ user[1] }}!</h1>
+    <h1>Your current balance is $500</h1>
+
+
+    <div class="carousel">
+        <div class="container-fluid">
+            <div class="owl-carousel">
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="img/carousel-1.jpg" alt="Image">
+                    </div>
+                    <div class="carousel-text">
+                        <h1>Best <span>Quality</span> Ingredients</h1>
+                        <div class="carousel-btn">
+                            <a class="btn custom-btn" href="">View Menu</a>
+                            <a class="btn custom-btn" href="">Book Table</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="img/carousel-2.jpg" alt="Image">
+                    </div>
+                    <div class="carousel-text">
+                        <h1>World’s <span>Best</span> Chef</h1>
+                        <div class="carousel-btn">
+                            <a class="btn custom-btn" href="">View Menu</a>
+                            <a class="btn custom-btn" href="">Book Table</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="img/carousel-3.jpg" alt="Image">
+                    </div>
+                    <div class="carousel-text">
+                        <h1>Fastest Order <span>Delivery</span></h1>
+                        <div class="carousel-btn">
+                            <a class="btn custom-btn" href="">View Menu</a>
+                            <a class="btn custom-btn" href="">Book Table</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+{% endfor %}
 
 {% endblock %}
+
+<!-- style="font-size: 3em; margin: 50px;padding: 0;text-align: center;font-family: Arial, Helvetica, sans-serif;" -->
