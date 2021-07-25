@@ -29,36 +29,42 @@
             <tr>
                 <td><a href='{{ record[3] }}'>{{ record[1] }}</a></td>
                 <td id='price{{ record[0] }}'>{{ record[2] }}</td>
-                <td><button id='{{ record[0] }}' onclick="sendItem('{{ record[0] }}', '{{ record[1] }}', '{{ record[2] }}', '{{ record[3] }}')">Add Item</button></td>
+                <td><button id='{{ record[0] }}' onclick="sendItem('{{ record[0] }}', '{{ record[1] }}', '{{ record[2] }}', '{{ record[3] }}', '{{ balance }}')">Add Item</button></td>
             </tr>
 
         {% endfor %}
     </table>
 
     <script>
-        function sendItem(asin, description, price, url){
-            the_balance = parsefloat('{{ balance }}')
-            the_price = parseFloat($('#price'+asin).text())
-            if (the_balance > the_price){
+        function sendItem(asin, description, price, url, balance){
+            the_balance = Number(balance)
+            the_price = Number(String($('#price'+asin).text()))
+
+            console.log(the_balance)
+            console.log(the_price)
+
+            if (the_balance < the_price){
                 console.log("not work")
+                $('#'+asin).text('Insufficient funds');
             }
             else{
                 console.log("all good")
+                $('#'+asin).text('Item added');
+
+                data = {
+                    'asin': asin,
+                    'description': description,
+                    'price': price,
+                    'url': url
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url_for('add_item') }}",
+                    data: data
+                });
             }
 
-            $('#'+asin).text('Item added');
-
-            data = {
-                'asin': asin,
-                'description': description,
-                'price': price,
-                'url': url
-            }
-            $.ajax({
-                type: "POST",
-                url: "{{ url_for('add_item') }}",
-                data: data
-            });
+            
         }
     </script>
 
