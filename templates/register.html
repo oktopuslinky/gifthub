@@ -10,7 +10,7 @@
 </head>
 <div class="register-box" style='background-color: black; opacity: 0.7; padding: 50px; border-radius:10px;'>
     <h1>Glad to have you!</h1>
-    <form action='/register' method='POST'>
+    <form action='/register' method='POST' enctype = "multipart/form-data">
         <div class="textbox">
             <input type="text" name="email" id="email" placeholder="Email" required>
         </div>
@@ -26,6 +26,13 @@
         <div class="textbox">
             <input type="number" name="balance" id="balance" placeholder="What is the gift budget? (in dollars)" required  style="font-size: 12px;">
         </div>
+
+        <input
+            type='file'
+            id='file'
+            name='file'
+            accept="image/png, image/jpeg"
+        >
 
         <input type="submit" class="btn" value="Next">
     </form>

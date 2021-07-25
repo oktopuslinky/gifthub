@@ -304,6 +304,7 @@ def inject_data():
     else:
         return dict(balance='500')
 
+"""
 @app.route('/upload_file', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -345,6 +346,7 @@ def upload_file():
         print('method was get.')
 
     return render_template('upload_file.html')
+"""
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -391,7 +393,40 @@ def register():
             the_data = the_cur.fetchall()
             print(the_data)
 
-            return redirect(url_for('upload_file'))
+            ##########
+            #next part is for files#
+            ##########
+
+            reg_planner_id=data[-1][0]
+
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['file']
+            print("filename:", file.filename)
+            mimetype=file.mimetype
+            mimetype = mimetype.replace('image/', '')
+            print("mime:", mimetype)
+            # If the user does not select a file, the browser submits an
+            # empty file without a filename.
+            if file.filename == '':
+                flash('No selected file')
+                return render_template('upload_file.html')
+            if file and allowed_file(file.filename):
+                filename = secure_filename(str(reg_planner_id)+'.'+str(mimetype))
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                
+                g.db.execute(
+                    '''
+                    UPDATE gift_list
+                    SET picture = ?
+                    WHERE planner_id = ?;
+                    ''', [filename, reg_planner_id]
+                )
+                g.db.commit()
+
+                return redirect(url_for('login'))
 
     return render_template('register.html')
 
