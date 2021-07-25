@@ -20,14 +20,7 @@ app.database='gifts.db'
 
 app.secret_key = "fopwiquaencsx325"
 
-@app.context_processor
-def inject_data():
-    g.db = connect_db()
-    if session['id'] is not None and session['id'] != "":
-        cur = g.db.execute("SELECT balance FROM gift_list WHERE planner_id=?", [session['id']])
-        data = cur.fetchall()
-        print(data)
-        return dict(balance=data[0][0])
+
 
 def login_required(f):
     @wraps(f)
@@ -299,6 +292,17 @@ def login():
                 return redirect(url_for('dashboard'))
 
         return render_template('login.html', error=error)
+
+@app.context_processor
+def inject_data():
+    g.db = connect_db()
+    if 'id' in session and session['id']:
+        cur = g.db.execute("SELECT balance FROM gift_list WHERE planner_id=?", [session['id']])
+        data = cur.fetchall()
+        the_data = str(data[0][0]).replace(",", "")
+        return dict(balance=the_data)
+    else:
+        return dict(balance='500')
 
 @app.route('/upload_file', methods=['GET', 'POST'])
 def upload_file():
