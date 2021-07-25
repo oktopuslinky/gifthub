@@ -26,7 +26,7 @@
             <th>Price</th>
         </tr>
         
-        <!-- do for range loop to get record number, then transmit data to app.py 
+        do for range loop to get record number, then transmit data to app.py 
 {% for record in records %}
 
 <tr>
@@ -79,13 +79,16 @@
 
     <div class="container my-3">
         <h1 class="text-center">Add An Item</h1>
-        <h4 class="text-center">Your current balance is (BALANCE)</h4>
-        <div class="mb-3">
-            <label for="title" class="form-label">Search your item</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter the keyword">
-            <div id="emailHelp" class="form-text"></div>
-        </div>
-        <button id="add" class="btn btn-primary">Search</button>
+        <h4 class="text-center">Your current balance is {{ balance }}</h4>
+        <form>
+            <div class="mb-3">
+                <label for="title" class="form-label">Search your item</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter the keyword">
+                <div id="emailHelp" class="form-text"></div>
+            </div>
+            <button id="add" class="btn btn-primary">Search</button>
+        </form>
+        
 
         <div id="items" class="my-4">
             <h2>Results</h2>
@@ -99,12 +102,14 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Lee T-Shirt</td>
-                        <td>#32.66</td>
-                        <td><button class="btn btn-sm btn-primary">Add to list</button></td>
-                    </tr>
+                    {% for record in records %}
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><a href='{{ record[3] }}'>{{ record[1] }}</a></td>
+                            <td>${{ record[2] }}</td>
+                            <td><button class="btn btn-sm btn-primary">Add to list</button></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
