@@ -25,31 +25,22 @@
     <div class="container my-3">
         <h1 class="text-center">Your special Wishlist!</h1>
         <h4 class="text-center">Your current balance is (BALANCE)</h4>
-        <div class="mb-3">
-            <label for="title" class="form-label">Search your item</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter the keyword">
-            <div id="emailHelp" class="form-text"></div>
-        </div>
-        <button id="add" class="btn btn-primary">Search</button>
 
         <div id="items" class="my-4">
-            <h2>Results</h2>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Sl. No</th>
-                        <th scope="col">Title</th>
+                        <th scope="col">Item name</th>
                         <th scope="col">Price</th>
-                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Lee T-Shirt</td>
-                        <td>#32.66</td>
-                        <td><button class="btn btn-sm btn-primary">Add to list</button></td>
-                    </tr>
+                    {% for item in wishlist %}
+                        <tr>
+                            <td><a href='{{ item[3] }}'>{{ item[1] }}</a></td>
+                            <td>${{ item[2] }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
