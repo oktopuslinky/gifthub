@@ -230,7 +230,7 @@ def home():
 def wishlist():
     planner_id, name, gift_ids, balance, picture = get_user_data()
     
-    if gift_ids == "":
+    if gift_ids == "" or gift_ids is None:
         flash('You have no items in your wishlist.')
         return render_template('wishlist.html')
     
