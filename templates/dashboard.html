@@ -19,8 +19,8 @@
             <h1>Your current balance is ${{ balance }}</h1>
         </div>
         <div class="carousel">
-            <a class="btn custom-btn" href="wishlist">See wishlist!</a>
-            <a class="btn custom-btn" href="search">Add Gifts</a>
+            <a class="btn custom-btn" href="{{ url_for('wishlist') }}">See wishlist!</a>
+            <a class="btn custom-btn" href="{{ url_for('add_item') }}">Add Gifts</a>
         </div>
     </div>
 
