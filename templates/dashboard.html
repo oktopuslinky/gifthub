@@ -13,15 +13,15 @@
 
 <body>
     <div class="dashboard">
-        {% for user in data %}
-        <h1>Welcome, {{ user[1] }}!</h1>
-        <h1>Your current balance is ${{ balance }}</h1>
-    </div>
-
-
-    <div class="carousel">
-        <a class="btn custom-btn" href="">See wishlist!</a>
-        <a class="btn custom-btn" href="">Add</a>
+        <div class="container">
+            {% for user in data %}
+            <h1>Welcome, {{ user[1] }}!</h1>
+            <h1>Your current balance is ${{ balance }}</h1>
+        </div>
+        <div class="carousel">
+            <a class="btn custom-btn" href="wish">See wishlist!</a>
+            <a class="btn custom-btn" href="">Add</a>
+        </div>
     </div>
 
 </body>
