@@ -297,12 +297,15 @@ def login():
 def inject_data():
     g.db = connect_db()
     if 'id' in session and session['id']:
-        cur = g.db.execute("SELECT balance FROM gift_list WHERE planner_id=?", [session['id']])
+        cur = g.db.execute("SELECT name, balance FROM gift_list WHERE planner_id=?", [session['id']])
         data = cur.fetchall()
-        the_data = str(data[0][0]).replace(",", "")
-        return dict(balance=the_data)
+        the_data = str(data[0][1]).replace(",", "")
+
+        the_name = str(data[0][0])
+
+        return dict(balance=the_data, name=the_name)
     else:
-        return dict(balance='500')
+        return dict(balance='500', name='user')
 
 """
 @app.route('/upload_file', methods=['GET', 'POST'])

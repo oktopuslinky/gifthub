@@ -19,21 +19,21 @@
             </div>
             <ul class="nav-list">
                 <li>
-                    <a href="/dashboard">
+                    <a href="{{ url_for('dashboard') }}">
                         <i class='bx bx-grid-alt'></i>
                         <span class="links_name">Dashboard</span>
                     </a>
                     <span class="tooltip">Dashboard</span>
                 </li>
                 <li>
-                    <a href="/search">
+                    <a href="{{ url_for('search') }}">
                         <i class='bx bx-cart-alt'></i>
                         <span class="links_name">Add Items</span>
                     </a>
                     <span class="tooltip">Add Items</span>
                 </li>
                 <li>
-                    <a href="wishlist">
+                    <a href="{{ url_for('wishlist') }}">
                         <i class='bx bx-heart'></i>
                         <span class="links_name">Wishlist</span>
                     </a>
@@ -42,12 +42,12 @@
                 <li class="profile" >
                     <div class="profile-details">
                         <div class="name_balance">
-                            <div class="name">USER-NAME</div>
+                            <div class="name">{{ name }}</div>
                             <div class="balance">{{ balance }}</div>
                         </div>
                     </div>
         
-                    <i class='bx bx-log-out' id="log_out" href="logout"></i>
+                    <i class='bx bx-log-out' id="log_out" href="{{ url_for('logout') }}"></i>
                 </li>
             </ul>
         </div>
